@@ -1,47 +1,61 @@
+
 listaCompras = []
 ComprasComDesconto = []
 
-#menu de apresentação
-print(10*"==")
-print(4*" ","PDV python")
-print(10*"==")
+# menu de apresentação
+print(10 * "==")
+print(4 * " ", "PDV python")
+print(10 * "==")
 
+# validação de idade e nome
+nome = str(input('Digite seu nome: '))
+idade = int(input('Digite sua idade: '))
 
-#validação de idade e nome   
-nome = str(input('digite seu nome: '))
-idade = int(input('digite sua idade: '))
-while idade <= 0:
-    idade = int(input('digite uma idade valida: '))
+if idade < 0:
+    print('Idade inválida!')
 
-#valores das compras    
+while idade < 0:
+    idade = int(input('Digite uma idade válida: '))
+
+# valores das compras
 while True:
-    listaCompras.append(float(input('digite o valor da compra (0 = sair): ')))
-    if listaCompras[-1] == 0:
-        listaCompras.remove(0)
+    valor = float(input('Digite o valor da compra (0 = sair): '))
+
+    # encerra o programa
+    if valor == 0:
         break
 
-#se idade for igual ou maior que 65 ganha desconto de 20 por cento
-if idade >= 65:
-    for i in range(len(listaCompras)):
-        ComprasComDesconto.append(listaCompras[i] - listaCompras[i]*0.20)
-if idade >= 65:
-    for j in range(len(ComprasComDesconto)):
-        if ComprasComDesconto[j] > 100:
-            ComprasComDesconto[j] =  ComprasComDesconto[j] -  ComprasComDesconto[j]*0.10
-elif idade < 65:
-    for j in range(len(listaCompras)):
-        if listaCompras[j] > 100:
-            listaCompras[j] =  listaCompras[j] -  listaCompras[j]*0.10
+    # validação do valor
+    if valor < 0:
+        print('Valor inválido!')
+        continue
 
-#formatação 
-print(f"total bruto: {sum(listaCompras)}")
-print(f"total de descontos: {sum(listaCompras) - sum(ComprasComDesconto)}")
-print(f"total de compras: {len(listaCompras)}")
-if idade >= 65:
-    print(f"total final: {sum(ComprasComDesconto)}")
-else:
-    print(f"total final: {sum(listaCompras)}")
+    # guarda o valor original
+    listaCompras.append(valor)
 
+    # desconto por idade
+    if idade >= 65:
+        valor = valor - (valor * 0.20)
 
+    # desconto por valor
+    if valor > 100:
+        valor = valor - (valor * 0.10)
 
-    
+    # guarda o valor com desconto
+    ComprasComDesconto.append(valor)
+
+    # exibe o valor final
+    print(f'Valor final: R$ {valor:.2f}')
+
+# resumo final
+total_bruto = sum(listaCompras)
+total_final = sum(ComprasComDesconto)
+total_descontos = total_bruto - total_final
+
+print('\n========== RESUMO DO DIA ==========')
+print(f'Cliente: {nome}')
+print(f'Total bruto: R$ {total_bruto:.2f}')
+print(f'Total de descontos: R$ {total_descontos:.2f}')
+print(f'Quantidade de compras: {len(listaCompras)}')
+print(f'Total final: R$ {total_final:.2f}')
+print('==================================')
